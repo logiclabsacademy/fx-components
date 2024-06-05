@@ -5,6 +5,8 @@ import  terser from '@rollup/plugin-terser';
 import { createSpaConfig } from '@open-wc/building-rollup';
 import copy from 'rollup-plugin-copy';
 
+import sass from '@rollup/plugin-sass';
+
 const baseConfig = createSpaConfig({
   outputDir: 'dist',
   legacyBuild: true,
@@ -15,6 +17,9 @@ export default {
   ...baseConfig,
   input: './src/main.ts',
   plugins: [
+    sass({
+      insert: true
+    }),
     resolve(),
     commonjs(),
     typescript(),
