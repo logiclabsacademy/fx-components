@@ -4,8 +4,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import  terser from '@rollup/plugin-terser';
 import { createSpaConfig } from '@open-wc/building-rollup';
 import copy from 'rollup-plugin-copy';
+import sass from 'node-sass';
 
-import  x from 'sass';
 const baseConfig = createSpaConfig({
   outputDir: 'dist',
   legacyBuild: true,
@@ -17,8 +17,10 @@ export default {
   input: './src/main.ts',
   plugins: [
     sass({
-      insert: true
+      output: 'dist/fx-components.css',
+      renderSync: true,
     }),
+  
     resolve(),
     commonjs(),
     typescript(),
