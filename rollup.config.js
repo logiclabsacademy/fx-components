@@ -31,8 +31,7 @@ export default {
   {
     dir: 'dist',
     format: 'umd',
-    sourcemap: true,
-    named: true,
+    sourcemap: true
   }],
 };
 

@@ -1,5 +1,6 @@
 
 import { Effects } from '../../utils/effects';
+import styles from '../styles/neumorphix.css';
 const { _compose } = Effects;
 
 class FxObservable extends HTMLElement {
@@ -44,10 +45,10 @@ class FxObservable extends HTMLElement {
 
     disconnectedCallback() {
         this.disconnect();
-    }
+    
 }
-
-class FxNeumorphix extends HTMLElement {
+}
+export class FxNeumorphix extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
