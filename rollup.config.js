@@ -5,8 +5,7 @@ import  terser from '@rollup/plugin-terser';
 import { createSpaConfig } from '@open-wc/building-rollup';
 import copy from 'rollup-plugin-copy';
 
-import sass from '@rollup/plugin-sass';
-
+import  x from 'sass';
 const baseConfig = createSpaConfig({
   outputDir: 'dist',
   legacyBuild: true,
@@ -28,9 +27,16 @@ export default {
       targets: [{ src: 'src/index.html', dest: 'dist' }]
     })
   ],
-  output: {
+  output: [{
     dir: 'dist',
     format: 'esm',
+    sourcemap: true,
   },
+  {
+    dir: 'dist',
+    format: 'umd',
+    sourcemap: true,
+    named: true,
+  }],
 };
 

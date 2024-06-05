@@ -1,31 +1,11 @@
 
 import { Effects } from '../../utils/effects';
-import styles from '../../styles/neumorphix.scss' assert { type: "scss" };
-
 const { _compose } = Effects;
 
-
-class FxNeumorphixObservable extends _compose(HTMLElement, FxNeumorphix, FxObservable) {
-    shadowRoot: any;
-    constructor() {
-        super();
-        const self = this;
-        
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot!.innerHTML = `
-            <style>
-                ${styles}
-            </style>
-            <slot></slot>
-        `;
-    }
-}
-    
 class FxObservable extends HTMLElement {
     observers: Map<Node, MutationObserver> = new Map();
 
     connectedCallback() {
-        if (super.connectedCallback) super.connectedCallback();
         this.observeAttributes();
     }
 
@@ -59,24 +39,17 @@ class FxObservable extends HTMLElement {
     }
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-        if (super.attributeChangedCallback) super.attributeChangedCallback(name, oldValue, newValue);
         console.log('attributeChangedCallback', name, oldValue, newValue);
     }
 
     disconnectedCallback() {
-        if (super.disconnectedCallback) super.disconnectedCallback();
         this.disconnect();
     }
 }
 
-
-customElements.define('fx-neu-observable', FxNeumorphixObservable as any);
-export { FxNeumorphixObservable as default };
-
 class FxNeumorphix extends HTMLElement {
     constructor() {
         super();
-        const self = this;
         this.attachShadow({ mode: 'open' });
         this.shadowRoot!.innerHTML = `
             <style>
@@ -100,12 +73,10 @@ class FxNeumorphix extends HTMLElement {
     }
 
     connectedCallback() {
-        if (super.connectedCallback) super.connectedCallback();
         this.applyNeumorphixStyles();
     }   
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (super.attributeChangedCallback) super.attributeChangedCallback(name, oldValue, newValue);
         if (oldValue !== newValue && name === 'fx-enable-neu') {
             this.applyNeumorphixStyles();
         } else if (oldValue !== newValue) {
@@ -122,8 +93,22 @@ class FxNeumorphix extends HTMLElement {
             this.style.borderRadius = 'initial';
         }
     }
-};
+}
 
+class FxNeumorphixObservable extends _compose(HTMLElement, FxNeumorphix, FxObservable) {
+    shadowRoot: any;
+    constructor() {
+        super();
+        
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot!.innerHTML = `
+            <style>
+                ${styles}
+            </style>
+            <slot></slot>
+        `;
+    }
+}
 
-
-// Path: src/components/fx-neu-observable/FxNemorphixObservable.test.ts
+customElements.define('fx-neu-observable', FxNeumorphixObservable as any);
+export { FxNeumorphixObservable as default };
