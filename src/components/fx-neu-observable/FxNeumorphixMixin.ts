@@ -10,7 +10,7 @@ export function FxNeumorphixMixin(Base: any) {
             if (super.connectedCallback) super.connectedCallback();
             this.applyNeumorphixStyles();
         }
-
+        
         attributeChangedCallback(name: string, oldValue: string, newValue: string) {
             if (super.attributeChangedCallback) super.attributeChangedCallback(name, oldValue, newValue);
             if (oldValue !== newValue && name === 'fx-enable-neu') {

@@ -1,1 +1,1 @@
-import './components/FxNemorphixObservable.ts'
+import './components/fx-neu-observable/FxNemorphixObservable.js'

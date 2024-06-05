@@ -1,6 +1,6 @@
 import { FxObservableMixin } from './FxObservableMixin';
 import { FxNeumorphixMixin } from './FxNeumorphixMixin';
-import { Effects } from '../utils/effects';
+import { Effects } from '../../utils/effects';
 import styles from '../styles/neumorphix.scss' assert { type: "scss" };
 
 const { _compose } = Effects;
@@ -10,7 +10,6 @@ class FxNeumorphixObservable extends _compose(HTMLElement, FxObservableMixin, Fx
     constructor() {
         super();
         const self = this;
-        this._onAttributeChange = this._onAttributeChange.bind(this);
         
         this.attachShadow({ mode: 'open' });
         this.shadowRoot!.innerHTML = `
