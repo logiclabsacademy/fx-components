@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import  terser from '@rollup/plugin-terser';
 import { createSpaConfig } from '@open-wc/building-rollup';
 import copy from 'rollup-plugin-copy';
-import sass from 'node-sass';
+import {compile} from 'node-sass';
 
 const baseConfig = createSpaConfig({
   outputDir: 'dist',
