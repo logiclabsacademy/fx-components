@@ -1,0 +1,61 @@
+$neu-light: #fcfcfc;
+$neu-dark: #3e3e3e;
+$neu-shadow-light: #ffffff;
+$neu-shadow-dark: #2a2a2a;
+$neu-radius: 10px;
+
+$neu-shadow-x: 5px;
+$neu-shadow-y: 5px;
+$neu-blur: 10px;
+$light-source: top left;
+$light: $neu-light;
+$dark: $neu-dark;
+
+@function lightness($color) {
+    $map : (
+        (red, 0.2126),
+        (green, 0.7152),
+        (blue, 0.0722)
+    );
+
+    $sum: 0;
+    @each $key, $value in $map {
+        $sum: $sum + nth($color, index($map, $key)) * $value;
+    }
+    @return $sum;
+}
+
+@function contrast($color1, $color2) {
+    $l1: lightness($color1) + 0.05;
+    $l2: lightness($color2) + 0.05;
+    @return if($l1 > $l2, $l1 / $l2, $l2 / $l1);
+}
+
+@function index($list, $value) {
+    @return index($list, $value);
+}
+
+@mixin neu($light-source: top left, $light: #ffffff, $dark: #000000) {
+    $h1: if(index($light-source, left), $neu-shadow-light, $neu-shadow-dark);
+    $h2: if(index($light-source, left), $neu-shadow-dark, $neu-shadow-light);
+    $v1: if(index($light-source, top), $neu-shadow-light, $neu-shadow-dark);
+    $v2: if(index($light-source, top), $neu-shadow-dark, $neu-shadow-light);
+
+    // Adjust shadows for contrast
+    $shadow-light: if(lightness($light) > lightness($dark), $neu-shadow-dark, $neu-shadow-light);
+    $shadow-dark: if(lightness($light) > lightness($dark), $neu-shadow-light, $neu-shadow-dark);
+
+    // Calculate contrast ratio
+    $contrast-ratio: contrast($dark, $light);
+
+    // Ensure sufficient contrast
+    @if $contrast-ratio < 4.5 {
+        $light: #ffffff; // Fallback to white if contrast is too low
+    }
+
+    // Apply shadows
+    box-shadow:
+        $shadow-light + $neu-shadow-x + $neu-shadow-y + $neu-blur $dark,
+        $shadow-dark + $neu-shadow-x + $neu-shadow-y + $neu-blur $light;
+    border-radius: $neu-radius;
+}
